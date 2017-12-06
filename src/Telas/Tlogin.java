@@ -5,6 +5,8 @@
  */
 package Telas;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author DevSilva
@@ -124,6 +126,9 @@ public class Tlogin extends javax.swing.JFrame {
 
         botaoEntrar.setBackground(new java.awt.Color(0, 51, 102));
         botaoEntrar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                botaoEntrarMouseClicked(evt);
+            }
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 botaoEntrarMousePressed(evt);
             }
@@ -214,21 +219,32 @@ public class Tlogin extends javax.swing.JFrame {
     }//GEN-LAST:event_jLfecharMouseClicked
 
     private void botaoEntrarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoEntrarMousePressed
-        new TelaMenu().show();// TODO add your handling code here:
-    }//GEN-LAST:event_botaoEntrarMousePressed
-    
+        String cont = null;
+        String sen = null;
+        cont=vConta.getText();
+        sen=vSenha.getText();
 
-    private void painelLogoMousePressed(java.awt.event.MouseEvent evt) {                                     
+        if (cont.equals("admin")&& sen.equals("admin")) {
+            new TelaMenu().show();// TODO add your handling code here:
+        } else {
+            System.err.println(cont);
+            System.err.println(sen);
+            System.err.println("Nao deu");
+            JOptionPane.showMessageDialog(null, "Usuario ou Senha Invalido");
+        }
+    }//GEN-LAST:event_botaoEntrarMousePressed
+
+    private void painelLogoMousePressed(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:
-       
-    } 
-    
+
+    }
+
     private void formMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseDragged
-       //int x = evt.getXOnScreen();
-       //int y = evt.getYOnScreen();
-       //this.setLocation(x - xx, y - xy);// TODO add your handling code here:
+        //int x = evt.getXOnScreen();
+        //int y = evt.getYOnScreen();
+        //this.setLocation(x - xx, y - xy);// TODO add your handling code here:
     }//GEN-LAST:event_formMouseDragged
-    
+
     //int xx,xy;
     private void formMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMousePressed
         //xx = evt.getX();
@@ -239,6 +255,10 @@ public class Tlogin extends javax.swing.JFrame {
         // TODO add your handling code here:
         new TelaCadastroUser().show();
     }//GEN-LAST:event_jLabel7MousePressed
+
+    private void botaoEntrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoEntrarMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botaoEntrarMouseClicked
 
     /**
      * @param args the command line arguments

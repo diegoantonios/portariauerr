@@ -279,4 +279,74 @@ public class PortariaJpaController implements Serializable {
 
     }
 
+    public List<Portaria> listapessoatabela() {
+        EntityManager em = getEntityManager();
+
+        try {
+            //List<Pessoa> listaPessoa = new ArrayList<>();
+            String sql = "SELECT nome FROM pessoa_geral,portaria WHERE portaria.id_pessoa_geral= pessoa_geral.id_pessoa_geral order by data_hora_saida";
+
+            Query q = em.createNativeQuery(sql);
+            //listaPessoa = q.getResultList();
+
+            //return listaPessoa;
+            return q.getResultList();
+        } finally {
+            em.close();
+        }
+
+    }
+        public List<Portaria> listadataentradatabela() {
+        EntityManager em = getEntityManager();
+
+        try {
+            //List<Pessoa> listaPessoa = new ArrayList<>();
+            String sql = "SELECT data_hora_entrada FROM pessoa_geral,portaria WHERE portaria.id_pessoa_geral= pessoa_geral.id_pessoa_geral order by data_hora_saida";
+
+            Query q = em.createNativeQuery(sql);
+            //listaPessoa = q.getResultList();
+
+            //return listaPessoa;
+            return q.getResultList();
+        } finally {
+            em.close();
+        }
+        }
+        public List<Portaria> listadescricaodatabela() {
+        EntityManager em = getEntityManager();
+
+        try {
+            //List<Pessoa> listaPessoa = new ArrayList<>();
+            String sql = "SELECT descricao FROM pessoa_geral,portaria WHERE portaria.id_pessoa_geral= pessoa_geral.id_pessoa_geral order by data_hora_saida";
+
+            Query q = em.createNativeQuery(sql);
+            //listaPessoa = q.getResultList();
+
+            //return listaPessoa;
+            return q.getResultList();
+        } finally {
+            em.close();
+        }
+
+
+    }
+            public List<Portaria> listadatasaidadatabela() {
+        EntityManager em = getEntityManager();
+
+        try {
+            //List<Pessoa> listaPessoa = new ArrayList<>();
+            String sql = "SELECT data_hora_saida FROM pessoa_geral,portaria WHERE portaria.id_pessoa_geral= pessoa_geral.id_pessoa_geral order by data_hora_saida";
+
+            Query q = em.createNativeQuery(sql);
+            //listaPessoa = q.getResultList();
+
+            //return listaPessoa;
+            return q.getResultList();
+        } finally {
+            em.close();
+        }
+
+
+    }
+
 }

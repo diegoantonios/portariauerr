@@ -587,6 +587,7 @@ public class TelaCadastroPortaria extends javax.swing.JFrame {
         String nomePBusca = String.valueOf(vNomePessoaPortaria.getText());
         String cpfPBusca = (String) vCpfPessoaPortaria.getText();
         String nomeDbuscado = null;
+        vDescricao.setText("");
         vCampoAlunoOut.setSelected(false);
         vCampoAlunoMasc.setSelected(false);
         vCampoAlunoFem.setSelected(false);

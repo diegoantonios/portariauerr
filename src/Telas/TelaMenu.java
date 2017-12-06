@@ -5,6 +5,14 @@
  */
 package Telas;
 
+import br.edu.uerr.appportariasolo.controler.PortariaJpaController;
+import br.edu.uerr.appportariasolo.modelo.Portaria;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.swing.JLabel;
 
 /**
@@ -50,6 +58,8 @@ public class TelaMenu extends javax.swing.JFrame {
         jLfechar = new javax.swing.JLabel();
         jLfechar1 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        vtabela = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(960, 540));
@@ -169,6 +179,11 @@ public class TelaMenu extends javax.swing.JFrame {
         jSeparator1.setForeground(new java.awt.Color(255, 255, 255));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/Img_pesq.png"))); // NOI18N
+        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel1MouseClicked(evt);
+            }
+        });
 
         jLfechar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/Img_home1.png"))); // NOI18N
         jLfechar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -232,13 +247,28 @@ public class TelaMenu extends javax.swing.JFrame {
 
         getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, -1));
 
+        vtabela.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
+            },
+            new String [] {
+                "Nome da Pessoa","Data de Entrada","Descrição","Data de Saida"
+            }
+        ));
+        jScrollPane2.setViewportView(vtabela);
+
+        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 90, 960, 330));
+
         setSize(new java.awt.Dimension(957, 538));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jLabel7MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MousePressed
         // TODO add your handling code here:
-         new TelaCadastroAluno().show();//
+        new TelaCadastroAluno().show();//
     }//GEN-LAST:event_jLabel7MousePressed
 
     private void jLfecharMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLfecharMouseClicked
@@ -272,9 +302,85 @@ public class TelaMenu extends javax.swing.JFrame {
         //xx = evt.getX();
         //xy = evt.getY();
     }//GEN-LAST:event_formMousePressed
-                                    
 
-       
+    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("apportariasoloPU");
+        PortariaJpaController portariaJpaController = new PortariaJpaController(emf);
+        List<Portaria> fun = new ArrayList<Portaria>();
+        int t = 0;
+        int ti = 0;
+        String[] nomePe = new String[200];
+        String[] daEn = new String[200];
+        String[] daDe = new String[200];
+        String[] daSa = new String[200];
+        String datasaidap = null;
+        SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        Date data = new Date();
+         try {
+
+            fun = portariaJpaController.listapessoatabela();
+            for (int i = 0; i <= fun.size(); i++) {
+                nomePe[i] = String.valueOf(fun.get(i));
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        try {
+
+            fun = portariaJpaController.listadataentradatabela();
+            for (int i = 0; i <= fun.size(); i++) {
+                daEn[i] = String.valueOf(date.format((fun.get(i))));
+                t = i;
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        try {
+
+            fun = portariaJpaController.listadescricaodatabela();
+            for (int i = 0; i <= fun.size(); i++) {
+                daDe[i] = String.valueOf(fun.get(i));
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        try {
+
+            fun = portariaJpaController.listadatasaidadatabela();
+            for (int i = 0; i <= fun.size(); i++) {
+                daSa[i] = String.valueOf(date.format((fun.get(i))));
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        //fazer dois vetores de 10 posiçoes, um para o nome , outro para a data
+        System.err.println("bla" + t);
+        vtabela.setModel(new javax.swing.table.DefaultTableModel(
+                new Object[][]{
+                    {nomePe[t - 0], daEn[t - 0], daDe[t - 0], daSa[t - 0]},
+                    {nomePe[t - 1], daEn[t - 1], daDe[t - 1], daSa[t - 1]},
+                    {nomePe[t - 2], daEn[t - 2], daDe[t - 2], daSa[t - 2]},
+                    {nomePe[t - 3], daEn[t - 3], daDe[t - 3], daSa[t - 3]},
+                    {nomePe[t - 4], daEn[t - 4], daDe[t - 4], daSa[t - 4]},
+                    {nomePe[t - 5], daEn[t - 5], daDe[t - 5], daSa[t - 5]},
+                    {nomePe[t - 6], daEn[t - 6], daDe[t - 6], daSa[t - 6]},
+                    {nomePe[t - 7], daEn[t - 7], daDe[t - 7], daSa[t - 7]},
+                    {nomePe[t - 8], daEn[t - 8], daDe[t - 8], daSa[t - 8]},
+                    {nomePe[t - 9], daEn[t - 9], daDe[t - 9], daSa[t - 9]},
+                    {nomePe[t - 10], daEn[t - 10], daDe[t - 10], daSa[t - 10]},
+                    {nomePe[t - 11], daEn[t - 11], daDe[t - 11], daSa[t - 11]},
+                    {nomePe[t - 12], daEn[t - 12], daDe[t - 12], daSa[t - 12]},
+                    {nomePe[t - 13], daEn[t - 13], daDe[t - 13], daSa[t - 13]},
+                    {nomePe[t - 14], daEn[t - 14], daDe[t - 14], daSa[t - 14]}
+                },
+                new String[]{
+                    "Nome da Pessoa", "Data de Entrada", "Descrição", "Data de Saida"
+                }
+        ));
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel1MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -329,10 +435,11 @@ public class TelaMenu extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
     private java.util.List<br.edu.uerr.appportariasolo.modelo.PessoaGeral> pessoaGeralList;
     private javax.persistence.Query pessoaGeralQuery;
+    private javax.swing.JTable vtabela;
     // End of variables declaration//GEN-END:variables
 
-   
 }

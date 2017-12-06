@@ -372,6 +372,9 @@ public class TelaBuscarPortaria extends javax.swing.JFrame {
 
     private void bPesquisaPortariaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bPesquisaPortariaMouseClicked
         // TODO add your handling code here:
+        vCampoAlunoOut.setSelected(false);
+        vCampoAlunoMasc.setSelected(false);
+        vCampoAlunoFem.setSelected(false);
         vDataHoraEntradaPesquisada.setText("");
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("apportariasoloPU");
         PortariaJpaController portariaJpaController = new PortariaJpaController(emf);

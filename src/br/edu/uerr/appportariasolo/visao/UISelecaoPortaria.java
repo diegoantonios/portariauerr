@@ -9,6 +9,7 @@ import br.edu.uerr.appportariasolo.controler.PessoaGeralJpaController;
 import br.edu.uerr.appportariasolo.controler.PortariaJpaController;
 import br.edu.uerr.appportariasolo.modelo.PessoaGeral;
 import br.edu.uerr.appportariasolo.modelo.Portaria;
+import com.sun.javafx.scene.control.skin.VirtualFlow;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -53,6 +54,16 @@ public class UISelecaoPortaria extends javax.swing.JFrame {
         portariaList2 = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : portariaQuery2.getResultList();
         pessoaGeralQuery2 = java.beans.Beans.isDesignTime() ? null : apportariasoloPUEntityManager.createQuery("SELECT p FROM PessoaGeral p");
         pessoaGeralList2 = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : pessoaGeralQuery2.getResultList();
+        portariaQuery3 = java.beans.Beans.isDesignTime() ? null : apportariasoloPUEntityManager.createQuery("SELECT p FROM Portaria p");
+        portariaList3 = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : portariaQuery3.getResultList();
+        funcionarioQuery = java.beans.Beans.isDesignTime() ? null : apportariasoloPUEntityManager.createQuery("SELECT f FROM Funcionario f");
+        funcionarioList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : funcionarioQuery.getResultList();
+        funcionarioQuery1 = java.beans.Beans.isDesignTime() ? null : apportariasoloPUEntityManager.createQuery("SELECT f FROM Funcionario f");
+        funcionarioList1 = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : funcionarioQuery1.getResultList();
+        funcionarioQuery2 = java.beans.Beans.isDesignTime() ? null : apportariasoloPUEntityManager.createQuery("SELECT f FROM Funcionario f");
+        funcionarioList2 = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : funcionarioQuery2.getResultList();
+        pessoaGeralQuery3 = java.beans.Beans.isDesignTime() ? null : apportariasoloPUEntityManager.createQuery("SELECT p FROM PessoaGeral p");
+        pessoaGeralList3 = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : pessoaGeralQuery3.getResultList();
         jLabel1 = new javax.swing.JLabel();
         bFecharPortaria = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
@@ -76,6 +87,9 @@ public class UISelecaoPortaria extends javax.swing.JFrame {
         vDataHoraEntradaPesquisada = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         vSexoPesquisado = new javax.swing.JTextField();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        vtabela = new javax.swing.JTable();
+        vAtualizar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -119,6 +133,26 @@ public class UISelecaoPortaria extends javax.swing.JFrame {
 
         jLabel11.setText("Descricação da Entrada:");
 
+        vtabela.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
+            },
+            new String [] {
+                "Nome da Pessoa","Data de Entrada","Descrição","Data de Saida"
+            }
+        ));
+        jScrollPane2.setViewportView(vtabela);
+
+        vAtualizar.setText("Atualizar");
+        vAtualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                vAtualizarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -127,55 +161,64 @@ public class UISelecaoPortaria extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(vDataEntradaBusca, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(bPesquisaPortaria))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(vNomePessoaBusca, javax.swing.GroupLayout.DEFAULT_SIZE, 354, Short.MAX_VALUE)
-                            .addComponent(vCpfPessoaBusca, javax.swing.GroupLayout.DEFAULT_SIZE, 354, Short.MAX_VALUE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(vDataHoraEntradaPesquisada))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel10)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(vCpfPesquisada))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(vNomePessoaPesquisada))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(vDataHoraSaidaPesquisada))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGap(0, 723, Short.MAX_VALUE)
                         .addComponent(bFecharPortaria))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel11)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(vDescricaoPesquisada))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel8)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel2)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(vDataEntradaBusca, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(bPesquisaPortaria))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel4))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(vNomePessoaBusca, javax.swing.GroupLayout.DEFAULT_SIZE, 319, Short.MAX_VALUE)
+                                    .addComponent(vCpfPessoaBusca, javax.swing.GroupLayout.DEFAULT_SIZE, 319, Short.MAX_VALUE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(vDataHoraEntradaPesquisada))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(31, 31, 31)
+                                .addComponent(vCpfPesquisada))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel7)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(vNomePessoaPesquisada))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(vDataHoraSaidaPesquisada))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel8)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(vTipoPesquisada)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 2, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(35, 35, 35)
+                                .addComponent(vSexoPesquisado))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel11)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(vDescricaoPesquisada)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(vTipoPesquisada)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 2, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.TRAILING)))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel9)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(vSexoPesquisado)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 604, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(44, 44, 44)
+                                .addComponent(vAtualizar))
+                            .addComponent(jLabel1))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -183,47 +226,55 @@ public class UISelecaoPortaria extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(vDataEntradaBusca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3)
-                    .addComponent(vNomePessoaBusca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(bPesquisaPortaria)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel4)
-                        .addComponent(vCpfPessoaBusca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(vDataHoraEntradaPesquisada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(5, 5, 5)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(vDataHoraSaidaPesquisada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(vNomePessoaPesquisada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(8, 8, 8)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel10)
-                    .addComponent(vCpfPesquisada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9)
-                    .addComponent(vSexoPesquisado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
-                    .addComponent(vTipoPesquisada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(vDescricaoPesquisada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel11))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel10)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel9)
+                        .addGap(357, 357, 357))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(vDataEntradaBusca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3)
+                            .addComponent(vNomePessoaBusca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(bPesquisaPortaria)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel4)
+                                .addComponent(vCpfPessoaBusca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(vDataHoraEntradaPesquisada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(5, 5, 5)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel6)
+                            .addComponent(vDataHoraSaidaPesquisada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel7)
+                            .addComponent(vNomePessoaPesquisada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(8, 8, 8)
+                        .addComponent(vCpfPesquisada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(vSexoPesquisado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel8)
+                            .addComponent(vTipoPesquisada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(vDescricaoPesquisada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel11))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(vAtualizar)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(20, 20, 20)))
                 .addComponent(bFecharPortaria)
                 .addContainerGap())
         );
@@ -464,6 +515,77 @@ public class UISelecaoPortaria extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_bPesquisaPortariaActionPerformed
 
+    private void vAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vAtualizarActionPerformed
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("apportariasoloPU");
+        PortariaJpaController portariaJpaController = new PortariaJpaController(emf);
+        List<Portaria> fun = new ArrayList<Portaria>();
+        String[] nomePe = new String[20];
+        String[] daEn = new String[20];
+        String[] daDe = new String[20];
+        String[] daSa = new String[20];
+        int t = 0;
+        String datasaidap = null;
+        SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        Date data = new Date();
+        try {
+
+            fun = portariaJpaController.listapessoatabela();
+            for (int i = 0; i <= fun.size(); i++) {
+                nomePe[i] = String.valueOf(fun.get(i));
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        try {
+
+            fun = portariaJpaController.listadataentradatabela();
+            for (int i = 0; i <= fun.size(); i++) {
+                daEn[i] = String.valueOf(date.format((fun.get(i))));
+                t = i;
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        try {
+
+            fun = portariaJpaController.listadescricaodatabela();
+            for (int i = 0; i <= fun.size(); i++) {
+                daDe[i] = String.valueOf(fun.get(i));
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        try {
+
+            fun = portariaJpaController.listadatasaidadatabela();
+            for (int i = 0; i <= fun.size(); i++) {
+                daSa[i] = String.valueOf(date.format((fun.get(i))));
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        //fazer dois vetores de 10 posiçoes, um para o nome , outro para a data
+        vtabela.setModel(new javax.swing.table.DefaultTableModel(
+                new Object[][]{
+                    {nomePe[t], daEn[t], daDe[t], daSa[t]},
+                    {nomePe[t - 1], daEn[t - 1], daDe[t - 1], daSa[t - 1]},
+                    {nomePe[t - 2], daEn[t - 2], daDe[t - 2], daSa[t - 2]},
+                    {nomePe[t - 3], daEn[t - 3], daDe[t - 3], daSa[t - 3]},
+                    {nomePe[t - 4], daEn[t - 4], daDe[t - 4], daSa[t - 4]},
+                    {nomePe[t - 5], daEn[t - 5], daDe[t - 5], daSa[t - 5]},
+                    {nomePe[t - 6], daEn[t - 6], daDe[t - 6], daSa[t - 6]},
+                    {nomePe[t - 7], daEn[t - 7], daDe[t - 7], daSa[t - 7]},
+                    {nomePe[t - 8], daEn[t - 8], daDe[t - 8], daSa[t - 8]},
+                    {nomePe[t - 9], daEn[t - 9], daDe[t - 9], daSa[t - 9]},
+                    {nomePe[t - 10], daEn[t - 10], daDe[t - 10], daSa[t - 10]},
+                    {nomePe[t - 11], daEn[t - 11], daDe[t - 11], daSa[t - 11]},
+                    {nomePe[t - 12], daEn[t - 12], daDe[t - 12], daSa[t - 12]}},
+                new String[]{
+                    "Nome da Pessoa", "Data de Entrada", "Descrição", "Data de Saida"
+                }
+        ));
+    }//GEN-LAST:event_vAtualizarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -503,6 +625,12 @@ public class UISelecaoPortaria extends javax.swing.JFrame {
     private javax.persistence.EntityManager apportariasoloPUEntityManager;
     private javax.swing.JButton bFecharPortaria;
     private javax.swing.JButton bPesquisaPortaria;
+    private java.util.List<br.edu.uerr.appportariasolo.modelo.Funcionario> funcionarioList;
+    private java.util.List<br.edu.uerr.appportariasolo.modelo.Funcionario> funcionarioList1;
+    private java.util.List<br.edu.uerr.appportariasolo.modelo.Funcionario> funcionarioList2;
+    private javax.persistence.Query funcionarioQuery;
+    private javax.persistence.Query funcionarioQuery1;
+    private javax.persistence.Query funcionarioQuery2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -514,18 +642,24 @@ public class UISelecaoPortaria extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JScrollPane jScrollPane2;
     private java.util.List<br.edu.uerr.appportariasolo.modelo.PessoaGeral> pessoaGeralList;
     private java.util.List<br.edu.uerr.appportariasolo.modelo.PessoaGeral> pessoaGeralList1;
     private java.util.List<br.edu.uerr.appportariasolo.modelo.PessoaGeral> pessoaGeralList2;
+    private java.util.List<br.edu.uerr.appportariasolo.modelo.PessoaGeral> pessoaGeralList3;
     private javax.persistence.Query pessoaGeralQuery;
     private javax.persistence.Query pessoaGeralQuery1;
     private javax.persistence.Query pessoaGeralQuery2;
+    private javax.persistence.Query pessoaGeralQuery3;
     private java.util.List<br.edu.uerr.appportariasolo.modelo.Portaria> portariaList;
     private java.util.List<br.edu.uerr.appportariasolo.modelo.Portaria> portariaList1;
     private java.util.List<br.edu.uerr.appportariasolo.modelo.Portaria> portariaList2;
+    private java.util.List<br.edu.uerr.appportariasolo.modelo.Portaria> portariaList3;
     private javax.persistence.Query portariaQuery;
     private javax.persistence.Query portariaQuery1;
     private javax.persistence.Query portariaQuery2;
+    private javax.persistence.Query portariaQuery3;
+    private javax.swing.JButton vAtualizar;
     private javax.swing.JTextField vCpfPesquisada;
     private javax.swing.JTextField vCpfPessoaBusca;
     private javax.swing.JTextField vDataEntradaBusca;
@@ -536,5 +670,6 @@ public class UISelecaoPortaria extends javax.swing.JFrame {
     private javax.swing.JTextField vNomePessoaPesquisada;
     private javax.swing.JTextField vSexoPesquisado;
     private javax.swing.JTextField vTipoPesquisada;
+    private javax.swing.JTable vtabela;
     // End of variables declaration//GEN-END:variables
 }
